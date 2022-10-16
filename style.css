@@ -29,6 +29,7 @@
     color: white;
     background-color: black;
 }
+
 @font-face {
     font-family: "poppins";
     src: url('konten/Montserrat-VariableFont_wght.ttf') format('truetype');
@@ -51,3 +52,10 @@
   ::-webkit-scrollbar-thumb{
     background-color:gray ;
   }
+ .item-footer a {
+    margin-right: 15px;
+    color: white;
+    text-decoration: none;
+    border-right: 2px solid white;
+    padding-right: 4px;
+}
