@@ -252,22 +252,32 @@
         </div>
       </div>
       <div class="row justify-content-center">
-        <div class="col-md-4" style="padding-bottom: 80px;">
-          <form class="m-3">
+        <div class="col-md-5  " style="padding-bottom: 80px;">
+          <div class="alert alert-success alert-dismissible fade show d-none" role="alert" id="contack-alert">
+            <strong>terkirim !!!!</strong> pesan anda telah kami terima
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          <form class="m-3" name="portofolio-contack-form">
             <div class="mb-3">
               <label for="name" class="form-label">name</label>
-              <input type="text" class="form-control" id="name" aria-describedby="emailHelp">
+              <input type="text" class="form-control" id="name" aria-describedby="emailHelp" name="nama">
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">email</label>
-              <input type="email" class="form-control" id="exampleInputPassword1">
+              <input type="email" class="form-control" id="exampleInputPassword1" name="email">
             </div>
             <div class="mb-3">
               <label for="exampleFormControlTextarea1" class="form-label">pesan</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="pesan"></textarea>
             </div>
-            <button type="submit"
-              style="background-color: white;color:black;border:2px solid black;box-shadow: 5px 5px;">Submit</button>
+            <button type="submit" id="btn-kirim"
+              style="background-color: white;color:black;border:2px solid black;box-shadow: 5px 5px;">Submit
+            </button>
+            <button class="d-none" type="button" disabled id="contack-loading"
+              style="background-color: white;color:black;border:2px solid black;box-shadow: 5px 5px;">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Loading...
+            </button>
           </form>
         </div>
       </div>
@@ -284,12 +294,12 @@
   <!-- end section contack -->
 
   <!-- footer -->
-  <footer >
+  <footer>
     <div class="container-fluid bg-dark  text-light text-center " style=" font-family: 'pixeboy';">
       <p class="title-content">© Copyright 2022 | created by Albretus ✨</p>
       <div class="row justify-content-center">
-        <div class="col-md-2 " >
-          <lu class="list-group list-group-horizontal" style=" list-style: none;" >
+        <div class="col-md-2 ">
+          <lu class="list-group list-group-horizontal" style=" list-style: none;">
             <li class="item-footer">
               <a href="#">Home</a>
             </li>
@@ -321,6 +331,32 @@
     ScrollReveal().reveal('.main-title, .title-content', { delay: 100, origin: 'left' });
     ScrollReveal().reveal('.img-title', { delay: 300, origin: 'bottom' });
     ScrollReveal().reveal('.card', { delay: 300, origin: 'bottom', interval: 100 });
+  </script>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzbIRrLDg9z84KopDYEYljTS52A79o7blp-RyRv3YvlCjJZhzSuZyvUWJ7jRY7wTRDYZw/exec'
+    const form = document.forms['portofolio-contack-form']
+    const alertContack = document.getElementById('contack-alert')
+    const btnLoading = document.getElementById('contack-loading')
+    const btnKirim = document.getElementById('btn-kirim')
+
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      // ketika tombol submit di klik
+      // tampilkan tombol loading, hilangkan tombol kirim
+      btnLoading.classList.toggle('d-none')
+      btnKirim.classList.toggle('d-none')
+
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => {
+          btnLoading.classList.toggle('d-none')
+          btnKirim.classList.toggle('d-none')
+          alertContack.classList.toggle('d-none')
+          form.reset();
+          console.log('Success!', response)
+        })
+        .catch(error => console.error('Error!', error.message))
+    })
   </script>
 </body>
 
